@@ -1,0 +1,1276 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacio de Repaso - MOD EFECTOS DEL ABORDAJE CON APARATOLOGÍA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ficde-azul-dark: #134252;
+            --ficde-azul-light: #2c5c6e;
+            --ficde-naranja: #e68161;
+            --ficde-naranja-hover: #ff9f85;
+            --tarjeta-bg: #f0f4f5;
+            --input-bg: #e2e8eb;
+            --texto-principal: #0f2d38;
+            --texto-secundario: #4a636e;
+            --verde-exito: #2e7d32;
+            --verde-bg: #c8e6c9;
+            --rojo-error: #c62828;
+            --naranja-bg: #ffe0b2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--ficde-azul-dark) 0%, #0a252e 100%);
+            min-height: 100vh;
+            color: var(--texto-principal);
+            padding: 20px;
+            background-attachment: fixed;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo-img { height: 50px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+
+        .module-tag {
+            background: var(--ficde-naranja);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .welcome-card {
+            background: var(--tarjeta-bg);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-bottom: 6px solid var(--ficde-naranja);
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            color: var(--ficde-azul-dark);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .fede-avatar-large {
+            width: 140px; height: 140px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: var(--ficde-naranja);
+            padding: 5px;
+            box-shadow: 0 10px 25px rgba(230, 129, 97, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .fede-avatar-large:hover { transform: scale(1.1); }
+
+        .fede-avatar-large img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+        }
+
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .block-card {
+            background: var(--tarjeta-bg);
+            padding: 30px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .block-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--ficde-naranja);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .block-icon {
+            font-size: 3rem; margin-bottom: 15px;
+            background: rgba(19, 66, 82, 0.1);
+            width: 70px; height: 70px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; color: var(--ficde-azul-dark);
+        }
+
+        .block-title { color: var(--ficde-azul-dark); font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+
+        .block-desc { 
+            color: var(--texto-secundario); 
+            font-size: 0.9rem; 
+            line-height: 1.5; 
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .activity-screen {
+            display: none;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .activity-screen.active { display: grid; }
+
+        .tutor-sidebar {
+            background: var(--ficde-azul-light);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            position: sticky; top: 20px;
+        }
+
+        .tutor-bubble {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--ficde-azul-dark);
+            margin-top: 20px;
+            position: relative;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .tutor-bubble::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            border-width: 0 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent rgba(255,255,255,0.95);
+            transform: translateX(-50%);
+        }
+
+        .activity-content {
+            background: var(--tarjeta-bg);
+            padding: 40px;
+            border-radius: 16px;
+            min-height: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .act-badge {
+            background: var(--ficde-naranja);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .act-title { font-size: 1.8rem; color: var(--ficde-azul-dark); margin: 15px 0; font-weight: 800; }
+
+        .act-instruction { 
+            font-size: 1.1rem; 
+            color: var(--texto-secundario); 
+            margin-bottom: 30px; 
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .student-input {
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--ficde-azul-dark);
+            transition: all 0.3s;
+        }
+
+        .student-input:focus { background: white; border-color: var(--ficde-naranja); outline: none; }
+
+        .fill-input {
+            border: none;
+            border-bottom: 2px solid var(--ficde-naranja);
+            background: transparent;
+            font-weight: 700;
+            color: var(--ficde-azul-dark);
+            text-align: center;
+            width: 200px;
+            font-size: 1.1rem;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 18px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            background: linear-gradient(90deg, var(--ficde-naranja), #ff9f85);
+            color: white;
+            box-shadow: 0 6px 20px rgba(230, 129, 97, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-action:hover { transform: translateY(-3px); }
+
+        .btn-back {
+            background: transparent;
+            color: var(--texto-secundario);
+            box-shadow: none;
+            border: 2px solid #ccc;
+            margin-top: 15px;
+        }
+
+        .btn-back:hover { background: #e0e0e0; color: var(--ficde-azul-dark); }
+
+        .traffic-row, .checklist-item {
+            background: white;
+            margin-bottom: 12px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .traffic-row:hover, .checklist-item:hover { border-color: var(--ficde-naranja); transform: translateX(5px); }
+
+        .traffic-btn {
+            width: 35px; height: 35px;
+            border-radius: 50%; border: 2px solid #ddd;
+            cursor: pointer;
+            opacity: 0.3;
+        }
+
+        .traffic-btn.active { opacity: 1; transform: scale(1.2); border-color: var(--ficde-azul-dark); }
+
+        .bg-green { background: #4CAF50; }
+
+        .bg-yellow { background: #FFC107; }
+
+        .bg-red { background: #f44336; }
+
+        .check-box {
+            width: 24px; height: 24px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .checklist-item.selected { border-color: var(--ficde-naranja); background: #fff5f0; }
+
+        .checklist-item.selected .check-box { background: var(--ficde-naranja); border-color: var(--ficde-naranja); color: white; }
+
+        .feedback-area {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 12px;
+            display: none;
+            animation: slideUp 0.4s;
+        }
+
+        .feedback-success { background: var(--verde-bg); color: #1b5e20; border-left: 6px solid var(--verde-exito); }
+
+        .feedback-retry { background: var(--naranja-bg); color: #bf360c; border-left: 6px solid #ef6c00; }
+
+        .feedback-fail { background: #cfd8dc; color: #37474f; border-left: 6px solid #455a64; }
+
+        #musicToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--ficde-naranja);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .activity-screen { grid-template-columns: 1fr; }
+            .tutor-sidebar { display: flex; align-items: center; gap: 20px; }
+            .fede-avatar-large { width: 80px; height: 80px; }
+            .tutor-bubble::after { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- AUDIOS MP3 -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="chill-study-desk-focus-concentration-lofi-451180.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="saludoInicial" preload="auto" src="saludoinicial.mp3"></audio>
+    <audio id="mensaje1Ejercicios" preload="auto" src="mensaje1ejercicios.mp3"></audio>
+    <audio id="mensaje2Ejercicios" preload="auto" src="mensaje2ejercicios.mp3"></audio>
+    <audio id="mensaje3Ejercicios" preload="auto" src="mensaje3ejercicios.mp3"></audio>
+    <audio id="mensaje4Ejercicios" preload="auto" src="mensaje4ejercicios.mp3"></audio>
+    <audio id="respuestaCorrecta" preload="auto" src="respuestacorrecta.mp3"></audio>
+    <audio id="primerError" preload="auto" src="primererror.mp3"></audio>
+    <audio id="segundoError" preload="auto" src="segundoerror.mp3"></audio>
+    <audio id="loLograste" preload="auto" src="lolograste.mp3"></audio>
+
+    <audio id="hoverSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.m4a"></audio>
+    <audio id="clickSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.m4a"></audio>
+    <audio id="successSound" preload="auto" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.m4a"></audio>
+
+    <button id="musicToggle" onclick="toggleMusic()">🔇</button>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="FICDE" class="logo-img" onerror="this.style.display='none'; document.getElementById('altLogo').style.display='block'">
+                <h2 id="altLogo" style="display:none; color:white; font-weight:800;">FICDE</h2>
+            </div>
+            <div class="module-tag">Módulo: EFECTOS DEL ABORDAJE CON APARATOLOGÍA</div>
+        </header>
+
+        <div id="selectionScreen">
+            <div class="welcome-card">
+                <div class="fede-avatar-large" onclick="playAudio('saludoInicial')">
+                    <img src="personaje.gif" alt="Fede">
+                </div>
+                <h1 class="welcome-title">Espacio de Repaso Interactivo</h1>
+                <p style="color: var(--texto-secundario); font-size: 1.1rem;">Donde el conocimiento se convierte en acción</p>
+            </div>
+
+            <div class="blocks-grid">
+                <div class="block-card" onclick="startModule('sintesis')">
+                    <div class="block-icon">🧠</div>
+                    <div class="block-title">Síntesis</div>
+                    <div class="block-desc">Alcance profesional no sanitario del masajista deportivo, fundamentos y parámetros de electroestimulación (TENS y EMS), radiofrecuencia, diatermia, magnetoterapia, ondas de choque, ultrasonido terapéutico, pistolas de percusión, radiación infrarroja y fotobiomodulación, considerando sus principios físicos, precauciones, limitaciones científicas y competencias profesionales.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('analisis')">
+                    <div class="block-icon">🔍</div>
+                    <div class="block-title">Análisis Crítico</div>
+                    <div class="block-desc">Límites profesionales y prevención de prácticas clínicas no autorizadas, riesgos por uso inadecuado de electroestimulación, radiofrecuencia, ondas de choque, ultrasonido y pistolas de percusión, precauciones anatómicas y contraindicaciones, mitos sobre magnetoterapia e infrarrojos, afirmaciones sin respaldo científico y criterios de derivación médica ante síntomas de origen desconocido.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('escenarios')">
+                    <div class="block-icon">🎬</div>
+                    <div class="block-title">Escenarios</div>
+                    <div class="block-desc">Análisis de casos deportivos, límites profesionales en el uso de aparatología, precauciones ante marcapasos y lesiones agudas, contraindicaciones de electroterapia, ultrasonido, infrarrojos y percusión, mitos sobre eliminación de ácido láctico, atención de molestias musculares persistentes, criterios de derivación profesional y reconocimiento de signos de alarma, como sospecha de trombosis venosa profunda.</div>
+                </div>
+
+                <div class="block-card" onclick="startModule('practica')">
+                    <div class="block-icon">⚡</div>
+                    <div class="block-title">Práctica</div>
+                    <div class="block-desc">Recepción y verificación de contraindicaciones, inspección cutánea, fundamentos de colocación de electrodos y uso de gel conductor, manejo y supervisión de electroestimulación, utilización segura de pistolas de percusión, precauciones con infrarrojos y fotobiomodulación, protocolos de apagado y retiro de equipos, registro de sesión y recomendaciones generales de bienestar, respetando los límites profesionales.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="activityScreen" class="activity-screen">
+            <div class="tutor-sidebar">
+                <div class="fede-avatar-large" style="width: 100px; height: 100px; border-color: var(--ficde-naranja);" onclick="replayTutorMessage()">
+                    <img src="personaje.gif" alt="Fede">
+                </div>
+                <div style="flex:1;">
+                    <h3 style="color:var(--ficde-naranja); margin-bottom:5px;">Tutor Fede</h3>
+                    <div class="tutor-bubble" id="tutorMessage"></div>
+                </div>
+            </div>
+
+            <div class="activity-content" id="activityContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== GESTIÓN DE AUDIO MP3 =====
+        const audioFiles = {
+            saludoInicial: document.getElementById('saludoInicial'),
+            mensaje1: document.getElementById('mensaje1Ejercicios'),
+            mensaje2: document.getElementById('mensaje2Ejercicios'),
+            mensaje3: document.getElementById('mensaje3Ejercicios'),
+            mensaje4: document.getElementById('mensaje4Ejercicios'),
+            correcto: document.getElementById('respuestaCorrecta'),
+            error1: document.getElementById('primerError'),
+            error2: document.getElementById('segundoError'),
+            loLograste: document.getElementById('loLograste')
+        };
+
+        function playAudio(audioKey) {
+            if (audioFiles[audioKey]) {
+                audioFiles[audioKey].currentTime = 0;
+                audioFiles[audioKey].play().catch(err => console.log('Error al reproducir audio:', err));
+            }
+        }
+
+        const bgMusic = document.getElementById('bgMusic');
+        const clickSoundEl = document.getElementById('clickSound');
+        const successSoundEl = document.getElementById('successSound');
+        const hoverSoundEl = document.getElementById('hoverSound');
+
+        let musicOn = false;
+        let audioUnlocked = false;
+
+        function unlockAudio() {
+            if (audioUnlocked) return;
+            Object.values(audioFiles).forEach(a => {
+                a.volume = 0;
+                const p = a.play();
+                if (p) p.then(() => { a.pause(); a.currentTime = 0; a.volume = 1; }).catch(()=>{});
+            });
+            audioUnlocked = true;
+        }
+
+        document.addEventListener('pointerdown', unlockAudio, { once: true });
+        document.addEventListener('keydown', unlockAudio, { once: true });
+
+        function toggleMusic() {
+            unlockAudio();
+            if (!musicOn) {
+                bgMusic.volume = 0.1;
+                bgMusic.play().catch(() => {});
+                document.getElementById('musicToggle').innerText = '🎵';
+            } else {
+                bgMusic.pause();
+                document.getElementById('musicToggle').innerText = '🔇';
+            }
+            musicOn = !musicOn;
+        }
+
+        function playSound(type) {
+            if (!audioUnlocked) return;
+            try {
+                if (type === 'click') { clickSoundEl.currentTime=0; clickSoundEl.volume=0.8; clickSoundEl.play().catch(()=>{}); }
+                if (type === 'success') { successSoundEl.currentTime=0; successSoundEl.volume=0.8; successSoundEl.play().catch(()=>{}); }
+                if (type === 'hover') { hoverSoundEl.currentTime=0; hoverSoundEl.volume=0.2; hoverSoundEl.play().catch(()=>{}); }
+            } catch (e) {}
+        }
+
+        function wireUiSounds() {
+            document.querySelectorAll('.block-card, .btn-action, .checklist-item, .traffic-row, .fede-avatar-large').forEach(el => {
+                if (el.dataset.sound === '1') return;
+                el.dataset.sound = '1';
+                el.addEventListener('mouseenter', () => playSound('hover'));
+                el.addEventListener('click', () => playSound('click'));
+            });
+        }
+
+        window.addEventListener('load', wireUiSounds);
+
+        // ===== NORMALIZACIÓN DE TEXTO =====
+        function normalizar(txt) {
+            return txt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function limpiarPuntuacionFinal(txt) {
+            return txt.replace(/[;,.]+\s*$/, '').trim();
+        }
+
+        function limpiarInstruccion(txt) {
+            return txt.replace(/\s*Opciones:\s*.*$/i, '').trim();
+        }
+
+        // ===== ACTIVIDADES =====
+        const modules = {
+            sintesis: [
+                {
+                    type: 'text',
+                    badge: "Marco disciplinar",
+                    title: "Alcances y competencias profesionales",
+                    instruction: "Define el rol y los límites del masajista deportivo ante la aparatología diferenciando su labor de la práctica médica.",
+                    tutor: "Recuerda que la formación técnica no faculta para emitir diagnósticos lesionales ni prescribir rehabilitaciones clínicas.",
+                    explanation: "El masajista deportivo actúa dentro de sus competencias de bienestar, priorizando la seguridad y la derivación médica oportuna.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["compet", "bienes", "deriva", "masaji", "deport", "actua", "dentro", "priori", "seguri", "medica"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'text',
+                    badge: "Modalidades eléctricas",
+                    title: "TENS vs. electroestimulación neuromuscular",
+                    instruction: "Clasifica las diferencias operativas y funcionales entre la corriente TENS y la electroestimulación neuromuscular (EMS).",
+                    tutor: "Analiza cuál técnica busca modular la sensación dolorosa y cuál persigue provocar una respuesta motora activa.",
+                    explanation: "El TENS modula la percepción del dolor mediante impulsos eléctricos, mientras que la EMS provoca la contracción muscular activa.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["percep", "contra", "impuls", "tens", "modula", "dolor", "median", "electr", "mientr", "provoc"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Seguridad en electroterapia",
+                    title: "Zonas de restricción para electrodos",
+                    instruction: "Selecciona las tres regiones anatómicas sobre las cuales está contraindicado colocar electrodos de estimulación eléctrica TENS.",
+                    items: [
+                        { text: "Región anterior del cuello o seno carotídeo", correct: true },
+                        { text: "Globos oculares y regiones orbitarias", correct: true },
+                        { text: "Disposición que permita el paso de corriente a través del tórax", correct: true },
+                        { text: "Vientre muscular de cuádriceps o gemelos sanos", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Descarta las zonas musculares periféricas seguras y enfócate en áreas vasculares y cardíacas de alto riesgo.",
+                    explanation: "Evitar el cuello, los ojos y el paso de corriente por el tórax previene accidentes graves en electroterapia."
+                },
+                {
+                    type: 'text',
+                    badge: "Termoterapia profunda",
+                    title: "Principios de la radiofrecuencia",
+                    instruction: "Detalla cómo la radiofrecuencia produce diatermia localizada y modificaciones circulatorias en los tejidos corporales.",
+                    tutor: "Aborda la transformación de energía en calor tisular profundo y la consiguiente respuesta vascular local.",
+                    explanation: "La energía electromagnética eleva la temperatura tisular profunda y genera cambios transitorios en la circulación sanguínea local.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["electr", "temper", "circul", "energi", "eleva", "tisula", "profun", "genera", "cambio", "transi"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'blanks',
+                    anyOrder: false,
+                    badge: "Magnetismo y salud",
+                    title: "Modalidades de magnetoterapia",
+                    instruction: "Completar la frase<br><br>Los imanes de campo magnético ________ carecen de evidencia sólida, a diferencia de los dispositivos de campos electromagnéticos ________ que se investigan en la consolidación _____.",
+                    blanks: ["estático", "pulsados", "ósea"],
+                    tutor: "Contrasta los accesorios comerciales pasivos con los equipos clínicos de estimulación periódica en fracturas.",
+                    explanation: "Diferenciar el campo estático de los campos pulsados permite comprender su rol investigado en la consolidación ósea."
+                },
+                {
+                    type: 'text',
+                    badge: "Terapia extracorpórea",
+                    title: "Ondas de choque focales y radiales",
+                    instruction: "Expone las características físicas y de propagación que distinguen a las ondas de choque focales de las ondas de presión radiales.",
+                    tutor: "Considera la concentración de energía en un punto diana frente a la dispersión mecánica divergente superficial.",
+                    explanation: "Las ondas acústicas mecánicas varían en su profundidad y activan procesos biológicos mediante mecanotransducción celular.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["acusti", "profun", "mecano", "ondas", "mecani", "varian", "activa", "proces", "biolog", "median"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Frecuencias acústicas",
+                    title: "Parámetros del ultrasonido terapéutico",
+                    instruction: "Identifica los conceptos físicos que definen el comportamiento de las ondas ultrasónicas de 1 MHz y 3 MHz en tejidos blandos.",
+                    items: [
+                        { text: "La frecuencia de 1 MHz presenta menor atenuación y alcanza tejidos relativamente más profundos", correct: true },
+                        { text: "La frecuencia de 3 MHz absorbe su energía rápidamente y se concentra en capas superficiales", correct: true },
+                        { text: "La velocidad de propagación de referencia en tejidos blandos es de aproximadamente 1540 m/s", correct: true },
+                        { text: "La frecuencia de 3 MHz penetra hasta el periostio óseo sin sufrir atenuación biológica", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Relaciona la longitud de onda y la velocidad con la profundidad relativa de absorción en el cuerpo humano.",
+                    explanation: "La frecuencia determina la profundidad alcanzada, variando la longitud de onda según la velocidad de propagación tisular."
+                },
+                {
+                    type: 'text',
+                    badge: "Masaje percusivo",
+                    title: "Parámetros y cabezales mecánicos",
+                    instruction: "Describe las funciones de la amplitud, la frecuencia y los cabezales esférico y en U en la pistola de percusión.",
+                    tutor: "Repasa el recorrido del vástago en milímetros y la adaptación de las superficies redondeadas o bifurcadas.",
+                    explanation: "La pistola de percusión modula su impacto mediante la amplitud mecánica y la selección adecuada de cabezales.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["percus", "amplit", "cabeza", "pistol", "modula", "impact", "median", "mecani", "selecc", "adecua"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: "Radiación luminosa",
+                    title: "Infrarrojo térmico y fotobiomodulación",
+                    instruction: "Marca afirmaciones correctas",
+                    items: [
+                        { text: "Las lámparas infrarrojas térmicas transfieren calor superficial por absorción de radiación electromagnética", color: "green" },
+                        { text: "La fotobiomodulación con luz roja depende exclusivamente del calentamiento extremo de la masa dérmica", color: "red" },
+                        { text: "La vasodilatación provocada por infrarrojos térmicos genera una relajación transitoria de la rigidez", color: "green" },
+                        { text: "Las lámparas de calor infrarrojo garantizan la regeneración completa de tendones con rotura total", color: "red" }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Distingue entre el calentamiento tisular superficial y los efectos celulares no térmicos de la luz.",
+                    explanation: "El calor infrarrojo produce vasodilatación superficial, mientras la fotobiomodulación actúa sobre mecanismos celulares."
+                },
+                {
+                    type: 'text',
+                    badge: "Evidencia científica",
+                    title: "Limitaciones de la aparatología complementaria",
+                    instruction: "Sintetiza por qué los dispositivos complementarios no deben publicitarse como curas milagrosas ni sustitutos del reposo o la rehabilitación.",
+                    tutor: "Analiza la variabilidad de la respuesta individual y la necesidad de no enmascarar patologías graves con alivios transitorios.",
+                    explanation: "Evaluar la evidencia disponible permite reconocer las limitaciones reales de cualquier recurso complementario en el deporte.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["eviden", "limita", "comple", "evalua", "dispon", "permit", "recono", "reales", "cualqu", "recurs"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                }
+            ],
+            analisis: [
+                {
+                    type: 'text',
+                    badge: "Extralimitación laboral",
+                    title: "Invasión de competencias médicas",
+                    instruction: "Examina las implicancias legales y deontológicas cuando un masajista deportivo indica aparatología para tratar una lesión no diagnosticada.",
+                    tutor: "Recuerda que indicar tratamientos terapéuticos sobre patologías excede las atribuciones de las disciplinas no sanitarias.",
+                    explanation: "Emitir un diagnóstico clínico constituye una grave extralimitación de incumbencias reservadas a profesionales sanitarios habilitados.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["diagno", "extral", "sanita", "emitir", "clinic", "consti", "grave", "incumb", "reserv", "profes"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'text',
+                    badge: "Riesgo en electroestimulación",
+                    title: "Errores en la disposición de electrodos",
+                    instruction: "Fundamenta las consecuencias fisiológicas adversas de ubicar electrodos sobre el seno carotídeo o cerrando circuitos trans-torácicos.",
+                    tutor: "Considera el riesgo de síncope por estimulación vagal y la alteración de la conducción eléctrica del miocardio.",
+                    explanation: "Posicionar electrodos cerca del seno carotídeo o cruzando el tórax puede desencadenar un colapso cardíaco fatal.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["electr", "caroti", "cardia", "posici", "cerca", "seno", "cruzan", "torax", "puede", "desenc"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Accidentes térmicos",
+                    title: "Peligros de la radiofrecuencia mal administrada",
+                    instruction: "Compara los factores de riesgo que provocan quemaduras dérmicas y daño tisular durante una sesión de diatermia.",
+                    items: [
+                        { text: "Falta de control de la sensibilidad térmica o hipoestesia del usuario", correct: true },
+                        { text: "Mantener el cabezal estático en un solo punto con potencia elevada", correct: true },
+                        { text: "Desatender la presencia de placas o implantes metálicos en la zona", correct: true },
+                        { text: "Limpiar la piel previamente con agua y jabón neutro antes del tratamiento", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Busca las causas vinculadas al calor acumulado y la concentración de energía en elementos conductores internos.",
+                    explanation: "Ignorar la sensibilidad, concentrar potencia estática e irradiar sobre implantes metálicos produce graves quemaduras tisulares."
+                },
+                {
+                    type: 'text',
+                    badge: "Pseudociencia en magnetismo",
+                    title: "Mitos del equilibrio energético",
+                    instruction: "Cuestiona los argumentos comerciales que afirman que los imanes estáticos restablecen el flujo energético y curan desgarros.",
+                    tutor: "Analiza por qué la literatura científica actual desestima las propiedades curativas universales de pulseras o parches imantados.",
+                    explanation: "Comercializar imanes estáticos sin respaldo en la evidencia promueve la pseudociencia y desinforma al deportista.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["estati", "eviden", "pseudo", "comerc", "imanes", "respal", "promue", "desinf", "deport", "cuesti"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'blanks',
+                    anyOrder: false,
+                    badge: "Riesgos en ondas de choque",
+                    title: "Zonas vulnerables y contraindicaciones",
+                    instruction: "Completar la frase<br><br>Aplicar ondas de choque acústicas cerca de tejido ________ puede provocar neumotórax, y hacerlo sobre pacientes bajo tratamiento con _______________ eleva el riesgo de hematomas graves.",
+                    blanks: ["pulmonar", "anticoagulantes"],
+                    tutor: "Identifica la estructura respiratoria frágil y la condición farmacológica que altera la coagulación sanguínea.",
+                    explanation: "Proteger el área pulmonar y verificar el uso de anticoagulantes previene complicaciones en la terapia mecánica."
+                },
+                {
+                    type: 'text',
+                    badge: "Acumulación ultrasónica",
+                    title: "Sobrecalentamiento perióstico",
+                    instruction: "Evalúa los efectos lesivos de aplicar ultrasonido terapéutico continuo manteniendo el cabezal inmóvil sobre salientes óseas.",
+                    tutor: "Reflexiona sobre la formación de ondas estacionarias y la concentración térmica dolorosa en el recubrimiento del hueso.",
+                    explanation: "Inmovilizar el cabezal genera un rápido sobrecalentamiento con dolor punzante en el periostio óseo.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["cabeza", "perios", "sobrec", "inmovi", "genera", "rapido", "dolor", "punzan", "oseo", "evalua"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Mitos del masaje percusivo",
+                    title: "Falacias sobre el ácido láctico",
+                    instruction: "Contrasta las falsas creencias publicitarias sobre las pistolas de percusión frente a la realidad fisiológica muscular.",
+                    items: [
+                        { text: "Afirmar que el golpeteo mecánico disuelve y drena mágicamente el ácido láctico", correct: true },
+                        { text: "Prometer que la percusión elimina definitivamente los puntos gatillo miofasciales", correct: true },
+                        { text: "Sostener que acelera de forma garantizada la cicatrización de un desgarro agudo", correct: true },
+                        { text: "Reconocer que aporta un alivio transitorio de la rigidez y favorece el bienestar", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Identifica aquellas aseveraciones que carecen de sustento biológico en la recuperación del lactato y lesiones estructurales.",
+                    explanation: "Atribuir disolución de lactato, cura de desgarros y eliminación de puntos gatillo distorsiona la realidad científica."
+                },
+                {
+                    type: 'text',
+                    badge: "Mala praxis con cabezales",
+                    title: "Uso del cabezal en U en la columna",
+                    instruction: "Analiza los riesgos biomecánicos de aplicar el cabezal en U directamente sobre las apófisis espinosas de la columna vertebral.",
+                    tutor: "Repasa la vulnerabilidad de las vértebras cervicales y la emergencia de las raíces nerviosas ante vibraciones rígidas.",
+                    explanation: "Golpear la columna sobre las apófisis óseas transmite un impacto nocivo que puede lesionar estructuras nerviosas.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["column", "apofis", "impact", "golpea", "oseas", "transm", "nocivo", "puede", "lesion", "estruc"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: "Mitos en termoterapia",
+                    title: "Desintoxicación y reducción de celulitis",
+                    instruction: "Marca afirmaciones correctas",
+                    items: [
+                        { text: "La radiación infrarroja térmica genera un calentamiento cutáneo que puede aliviar molestias musculares leves", color: "green" },
+                        { text: "Las lámparas de infrarrojos derriten la grasa localizada y eliminan toxinas sistémicas del organismo", color: "red" },
+                        { text: "La supervisión constante de la distancia de la lámpara evita la producción de eritemas y quemaduras dérmicas", color: "green" },
+                        { text: "La fotobiomodulación sustituye la necesidad de cualquier tratamiento médico en patologías dermatológicas graves", color: "red" }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Descarta las promesas comerciales sobre reducción de adiposidad y desintoxicación por sudoración térmica.",
+                    explanation: "El calor infrarrojo brinda alivio, pero no elimina toxinas ni reduce grasa corporal localizada."
+                },
+                {
+                    type: 'text',
+                    badge: "Síntomas no filiados",
+                    title: "Peligro de enmascarar dolor desconocido",
+                    instruction: "Juzga las consecuencias de aplicar aparatología analgésica sobre un dolor agudo de causa desconocida sin diagnóstico previo.",
+                    tutor: "Considera cómo silenciar el síntoma puede retrasar la detección de una fractura, trombosis o proceso infeccioso grave.",
+                    explanation: "Calmar el dolor puede enmascarar una grave patología, retrasando la indispensable valoración médica especializada.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["enmasc", "patolo", "valora", "calmar", "dolor", "puede", "grave", "retras", "indisp", "medica"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                }
+            ],
+            escenarios: [
+                {
+                    type: 'text',
+                    badge: "Demanda indebida",
+                    title: "Solicitud de prescripción de TENS",
+                    instruction: "Resuelve la conducta comunicativa del masajista cuando un deportista exige que le programe una sesión de TENS para su lumbago.",
+                    tutor: "Aclara con amabilidad que la electroterapia requiere indicación sanitaria y ofrece masaje de relajación en zonas no contraindicadas.",
+                    explanation: "Explicar las competencias de forma pedagógica y sugerir la consulta con un médico mantiene la ética profesional.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["compet", "pedago", "medico", "explic", "forma", "sugeri", "consul", "mantie", "etica", "profes"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: "Implante electrónico",
+                    title: "Consulta de usuario con marcapasos",
+                    instruction: "Marca afirmaciones correctas",
+                    items: [
+                        { text: "Rechazar la aplicación de TENS, radiofrecuencia o magnetoterapia ante la presencia de un marcapasos cardíaco", color: "green" },
+                        { text: "Utilizar campos electromagnéticos pulsados a baja potencia asegurando que no alteran los circuitos del marcapasos", color: "red" },
+                        { text: "Explicar al usuario que los campos electromagnéticos conllevan riesgo crítico de interferencia en su dispositivo", color: "green" },
+                        { text: "Aplicar electrodos sobre el pecho del deportista si este manifiesta sentirse en óptimas condiciones físicas", color: "red" }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "La presencia de marcapasos representa una contraindicación estricta para aparatología electromagnética y de corrientes.",
+                    explanation: "Excluir dispositivos ante marcapasos, evitar interferencia eléctrica y priorizar la seguridad preserva la vida del cliente."
+                },
+                {
+                    type: 'text',
+                    badge: "Traumatismo reciente",
+                    title: "Sospecha de rotura fibrilar en gemelo",
+                    instruction: "Determina la intervención adecuada ante un velocista que sintió un pinchazo agudo en la pantorrilla y pide percusión profunda.",
+                    tutor: "Recuerda que la percusión sobre fibras musculares desgarradas amplía la brecha lesional y reactiva la hemorragia interna.",
+                    explanation: "Practicar la abstención total sobre el presunto desgarro previene hemorragias y orienta hacia una ecografía médica.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["absten", "desgar", "ecogra", "practi", "total", "presun", "previe", "hemorr", "orient", "medica"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Molestia plantar",
+                    title: "Corredor con fascitis diagnosticada",
+                    instruction: "Precisa las tres conductas profesionales válidas cuando un atleta con diagnóstico médico de fascitis solicita apoyo de bienestar.",
+                    items: [
+                        { text: "Aplicar masaje manual descontracturante en gemelos y sóleo para liberar tensión miofascial", correct: true },
+                        { text: "Explicar que las ondas de choque son un procedimiento clínico reservado a personal sanitario habilitado", correct: true },
+                        { text: "Respetar las indicaciones médicas y evitar maniobras lesivas directas sobre la inserción calcánea inflamada", correct: true },
+                        { text: "Indicar de forma autónoma tres sesiones de ultrasonido terapéutico a dosis máxima sobre el talón", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Delimita la descarga muscular manual de los procedimientos médicos invasivos o de alta energía en el tendón.",
+                    explanation: "Combinar la descarga manual, respetar las pautas del médico y no aplicar técnicas de choque asegura una atención ética."
+                },
+                {
+                    type: 'text',
+                    badge: "Zona de alto riesgo",
+                    title: "Petición de cabezal en U en cervicales",
+                    instruction: "Dictamina la respuesta técnica cuando un cliente solicita pasar la pistola con cabezal en U por la nuca y cuello para aliviar tensión.",
+                    tutor: "Argumenta el riesgo de traumatismo vascular o articular y ofrece trabajar suavemente los hombros con cabezal redondo o masaje manual.",
+                    explanation: "Desaconsejar el uso en cervicales, proteger la arteria vertebral y sugerir cabezal esférico en hombros evita lesiones.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["cervic", "verteb", "esferi", "desaco", "proteg", "arteri", "sugeri", "cabeza", "hombro", "evita"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: "Mitos en el post-esfuerzo",
+                    title: "Exigencia de barrido de ácido láctico",
+                    instruction: "Marca afirmaciones correctas",
+                    items: [
+                        { text: "Aclarar al atleta que el lactato se aclara fisiológicamente de forma natural poco después del ejercicio", color: "green" },
+                        { text: "Asegurar al maratonista que quince minutos de percusión pesada disolverán todos los cristales de lactato", color: "red" },
+                        { text: "Proponer un masaje suave de descarga circulatoria y reposo para favorecer el retorno a la calma", color: "green" },
+                        { text: "Aplicar presiones percusivas máximas sobre músculos doloridos para obligar al músculo a desinflamarse", color: "red" }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Educa al deportista sobre los mecanismos metabólicos reales sin recurrir a mitos comerciales sobre el ácido láctico.",
+                    explanation: "Explicar el aclaramiento de lactato, evitar la percusión agresiva y promover el reposo optimiza la recuperación."
+                },
+                {
+                    type: 'text',
+                    badge: "Lesión hemática",
+                    title: "Atleta con gran hematoma en cuádriceps",
+                    instruction: "Prioriza el proceder técnico cuando un futbolista con un hematoma violáceo en el muslo pide ultrasonido para disolverlo.",
+                    tutor: "Evalúa el peligro de que las vibraciones mecánicas y el calor reactiven el sangrado capilar en una fase no consolidada.",
+                    explanation: "No aplicar aparatología sobre el hematoma evita reactivar el sangrado y permite su natural reabsorción fisiológica.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["hemato", "sangra", "reabso", "aplica", "aparat", "evita", "reacti", "permit", "natura", "fisiol"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Termoalerta cutánea",
+                    title: "Usuario con insensibilidad al calor",
+                    instruction: "Plantea las tres precauciones indispensables al atender a un usuario que presenta hipoestesia dérmica y pide lámpara de calor.",
+                    items: [
+                        { text: "Descartar la aplicación de calor por riesgo inminente de quemadura indolora inadvertida", correct: true },
+                        { text: "Verificar el estado de la piel e interrogar sobre antecedentes neuropáticos o diabéticos", correct: true },
+                        { text: "Explicar con claridad que la falta de sensibilidad impide monitorear la dosis térmica segura", correct: true },
+                        { text: "Acercar la lámpara a diez centímetros del cuerpo para forzar la percepción de temperatura", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Recuerda que la respuesta sensorial subjetiva del usuario es el termómetro de seguridad fundamental ante el infrarrojo.",
+                    explanation: "Evitar el calor, revisar antecedentes de neuropatía y proteger de quemadura indolora resguarda al usuario."
+                },
+                {
+                    type: 'text',
+                    badge: "Información sobre terapias",
+                    title: "Duda sobre ondas de choque en hombro",
+                    instruction: "Establece el rol informativo del masajista ante un tenista con tendinopatía calcificante que consulta sobre las ondas de choque.",
+                    tutor: "Explica en qué consiste el procedimiento según el manual y orienta a que un traumatólogo evalúe la indicación en su hombro.",
+                    explanation: "Aportar orientación informativa sobre la fragmentación de calcificaciones y remitir al especialista guía adecuadamente al atleta.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["inform", "calcif", "especi", "aporta", "orient", "fragme", "remiti", "guia", "adecua", "atleta"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: "Signos de alarma vascular",
+                    title: "Sospecha de tromboflebitis en pantorrilla",
+                    instruction: "Marca afirmaciones correctas",
+                    items: [
+                        { text: "Abstenerse de aplicar masaje, percusión o cualquier aparato sobre una pierna empastada, caliente y dolorosa", color: "green" },
+                        { text: "Realizar drenaje percusivo intenso para intentar disolver la dureza venosa detectada en la pantorrilla", color: "red" },
+                        { text: "Indicar al usuario que concurra inmediatamente a una guardia médica para descartar trombosis venosa profunda", color: "green" },
+                        { text: "Colocar una lámpara de calor infrarrojo directo sobre el trayecto venoso inflamado para aliviar la molestia", color: "red" }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "La sospecha de trombosis es una contraindicación médica absoluta donde cualquier manipulación puede provocar un émbolo.",
+                    explanation: "Suspender todo masaje, descartar calor y derivar a guardia médica protege la vida del deportista."
+                }
+            ],
+            practica: [
+                {
+                    type: 'checklist',
+                    badge: "Filtro de seguridad inicial",
+                    title: "Cuestionario de ingreso al gabinete",
+                    instruction: "Estructura las tres preguntas de descarte que deben realizarse obligatoriamente antes de planificar cualquier uso de aparatología.",
+                    items: [
+                        { text: "¿Posee marcapasos, desfibrilador cardíaco u otros dispositivos electrónicos implantados?", correct: true },
+                        { text: "¿Presenta alteraciones de la sensibilidad al calor, heridas abiertas o sospecha de trombosis?", correct: true },
+                        { text: "¿Ha padecido dolor agudo repentino, traumatismo reciente o se encuentra bajo tratamiento médico?", correct: true },
+                        { text: "¿Cuál es su récord personal de velocidad en pista y qué marca de zapatillas utiliza?", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Concéntrate en los factores clínicos de exclusión que prohíben estímulos térmicos, eléctricos o mecánicos.",
+                    explanation: "Indagar sobre marcapasos, verificar la sensibilidad cutánea y detectar un traumatismo previene eventos adversos."
+                },
+                {
+                    type: 'text',
+                    badge: "Procedimiento en electrodos",
+                    title: "Higiene y colocación de parches adhesivos",
+                    instruction: "Organiza los pasos de inspección dérmica, limpieza y fijación de electrodos en extremidades para una sesión simulada.",
+                    tutor: "Repasa la preparación con piel limpia y seca, sin cremas ni escoriaciones, garantizando contacto parejo en el músculo.",
+                    explanation: "Realizar la limpieza previa, ubicar los electrodos sobre piel sana y asegurar su adherencia evita quemaduras superficiales.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["limpie", "electr", "adhere", "realiz", "previa", "ubicar", "piel", "sana", "asegur", "evita"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'blanks',
+                    anyOrder: false,
+                    badge: "Transmisión acústica",
+                    title: "Empleo del medio de acoplamiento",
+                    instruction: "Completar la frase<br><br>En la aplicación de cabezales acústicos es obligatorio utilizar gel de ____________ para eliminar el aire entre el transductor y la piel, evitando el sobrecalentamiento y favoreciendo la propagación de las _____ mecánicas.",
+                    blanks: ["acoplamiento", "ondas"],
+                    tutor: "Recuerda por qué las ondas ultrasónicas no pueden transmitirse eficazmente a través del aire hacia los tejidos.",
+                    explanation: "Aplicar gel de acoplamiento garantiza la transmisión de ondas acústicas protegiendo el transductor de daños."
+                },
+                {
+                    type: 'traffic',
+                    badge: "Operación de electroterapia",
+                    title: "Puesta en marcha y supervisión",
+                    instruction: "Marca afirmaciones correctas",
+                    items: [
+                        { text: "Incrementar la intensidad de forma paulatina consultando permanentemente la sensación del usuario", color: "green" },
+                        { text: "Encender el equipo con la perilla de potencia colocada al máximo para sorprender positivamente al músculo", color: "red" },
+                        { text: "Apagar la unidad de control antes de proceder a despegar los electrodos de la piel del usuario", color: "green" },
+                        { text: "Ignorar quejas de ardor o sensación punzante bajo los electrodos indicando que el tratamiento debe doler", color: "red" }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "La modulación progresiva y el apagado previo al retiro son reglas inviolables en el uso de corrientes.",
+                    explanation: "Elevar la intensidad con suavidad, interrumpir ante ardor y desconectar la unidad garantiza un procedimiento seguro."
+                },
+                {
+                    type: 'text',
+                    badge: "Montaje de percutor",
+                    title: "Elección e inserción del cabezal esférico",
+                    instruction: "Aplica el procedimiento seguro para apagar el equipo, insertar el cabezal redondo y verificar su correcto anclaje.",
+                    tutor: "Manipula el accesorio con el motor apagado asegurando que ingrese firmemente en la boquilla sin holguras.",
+                    explanation: "Colocar el cabezal redondo esférico asegurando su correcto encastre mecánico evita desprendimientos durante el masaje.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["cabeza", "esferi", "encast", "coloca", "redond", "asegur", "correc", "mecani", "evita", "despre"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Maniobra de percusión",
+                    title: "Técnica de deslizamiento muscular",
+                    instruction: "Ejecuta las tres pautas técnicas requeridas al deslizar la pistola de percusión sobre masas musculares de muslos o glúteos.",
+                    items: [
+                        { text: "Apoyar suavemente el cabezal dejando que el peso del equipo actúe sin empujar con fuerza excesiva", correct: true },
+                        { text: "Mantener desplazamientos lentos y continuos longitudinales a lo largo de las fibras musculares", correct: true },
+                        { text: "Interrumpir de inmediato si el usuario manifiesta dolor punzante", correct: true },
+                        { text: "calambres o adormecimiento", correct: true },
+                        { text: "Clavar fijamente la pistola con máxima presión durante diez minutos en una sola inserción tendinosa", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Busca la técnica de contacto no invasivo que respeta el umbral de confort y evita presiones estáticas lesivas.",
+                    explanation: "Deslizar con suavidad el peso, avanzar a lo largo de las fibras y detener ante dolor optimiza el uso del percutor."
+                },
+                {
+                    type: 'text',
+                    badge: "Calentamiento radiante",
+                    title: "Calibración y distancia de lámpara térmica",
+                    instruction: "Formula el método para posicionar la lámpara infrarroja a distancia prudente y controlar la temperatura cutánea.",
+                    tutor: "Recuerda colocar la fuente perpendicular a la zona, respetar las pautas del fabricante y vigilar que no haya ardor.",
+                    explanation: "Mantener adecuada distancia, graduar el tiempo de exposición y controlar el enrojecimiento previene quemaduras dérmicas.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["distan", "exposi", "enroje", "manten", "adecua", "gradua", "tiempo", "contro", "previe", "quemad"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'traffic',
+                    badge: "Resguardo sensorial",
+                    title: "Protección ocular en fotobiomodulación",
+                    instruction: "Marca afirmaciones correctas",
+                    items: [
+                        { text: "Colocar gafas de protección ocular específicas tanto al operador como al usuario ante fuentes de luz concentrada", color: "green" },
+                        { text: "Mirar fijamente el haz luminoso del cabezal LED o láser para comprobar si la bombilla emite energía", color: "red" },
+                        { text: "Verificar que la longitud de onda del dispositivo sea bloqueada por el filtro óptico de las gafas", color: "green" },
+                        { text: "Utilizar gafas de sol comunes de playa para manipular emisores láser de fisioterapia clínica", color: "red" }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "La retina humana es extremadamente vulnerable a la radiación lumínica y láser no atenuada.",
+                    explanation: "Utilizar gafas con filtro para la longitud de onda protege la retina de daños oculares irreparables."
+                },
+                {
+                    type: 'text',
+                    badge: "Protocolo de finalización",
+                    title: "Retiro, limpieza y sanitización de equipos",
+                    instruction: "Implementa la secuencia de desconexión, desinfección de cabezales y preservación de cables post-atención.",
+                    tutor: "Limpia restos de gel o sudor con toallas desinfectantes sin sumergir partes eléctricas y enrolla cables sin estrangular.",
+                    explanation: "Realizar la desconexión del equipo, aplicar una rigurosa sanitización y ordenar los accesorios garantiza la higiene del gabinete.",
+                    validation: (raw) => {
+                        const v = normalizar(raw);
+                        const roots = ["descon", "saniti", "higien", "realiz", "equipo", "aplica", "riguro", "ordena", "acceso", "garant"];
+                        return roots.filter(r => v.includes(r)).length >= 2;
+                    }
+                },
+                {
+                    type: 'checklist',
+                    badge: "Registro y seguimiento",
+                    title: "Cierre de ficha y pautas para el hogar",
+                    instruction: "Coordina las tres acciones indispensables que cierran el encuentro deportivo asentando la evolución del cliente.",
+                    items: [
+                        { text: "Anotar en la ficha técnica las zonas abordadas", correct: true },
+                        { text: "el cabezal utilizado y la respuesta subjetiva del usuario", correct: true },
+                        { text: "Recomendar hábitos saludables de hidratación", correct: true },
+                        { text: "reposo adecuado y pautas generales de movilidad suave", correct: true },
+                        { text: "Solicitar al usuario que reporte cualquier molestia inusual y reiterar la derivación si los síntomas persisten", correct: true },
+                        { text: "Indicar la ingesta de fármacos analgésicos de venta bajo receta para potenciar el efecto del masaje", correct: false }
+                    ].sort(() => Math.random() - 0.5),
+                    tutor: "Asegúrate de registrar los procedimientos, promover pautas higiénicas y descartar prescripciones farmacológicas.",
+                    explanation: "Documentar en la ficha, fomentar hábitos de hidratación y coordinar la derivación médica concluye el servicio con excelencia."
+                }
+            ]
+        };
+
+﻿
+        let currentModule = '';
+        let currentIndex = 0;
+        let attemptCount = 0;
+        let lastAudioModule = null;
+
+        // ===== MAPEO DE MÓDULOS A AUDIOS =====
+        const moduloAudioMap = {
+            'sintesis': 'mensaje1',
+            'analisis': 'mensaje2',
+            'escenarios': 'mensaje3',
+            'practica': 'mensaje4'
+        };
+
+        function startModule(id) {
+            playSound('click');
+            currentModule = id;
+            currentIndex = 0;
+            attemptCount = 0;
+            lastAudioModule = id;
+
+            const audioKey = moduloAudioMap[id];
+            if (audioKey) {
+                playAudio(audioKey);
+            }
+
+            document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('activityScreen').classList.add('active');
+
+            setTimeout(loadActivity, 300);
+        }
+
+        function loadActivity() {
+            attemptCount = 0;
+
+            if (currentIndex >= modules[currentModule].length) {
+                playAudio('lolograste');
+                playSound('success');
+                alert('¡Excelente! Completaste este bloque de repaso.');
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+                return;
+            }
+
+            const data = modules[currentModule][currentIndex];
+            const container = document.getElementById('activityContainer');
+
+            const msg = `Pregunta ${currentIndex + 1} de ${modules[currentModule].length}: ${data.tutor}`;
+            document.getElementById('tutorMessage').innerText = msg;
+
+            let html = `<span class="act-badge">${data.badge}</span>
+                        <h2 class="act-title">${data.title}</h2>
+                        <p class="act-instruction">${limpiarInstruccion(data.instruction)}</p>`;
+
+            if (data.type === 'text') {
+                html += `<textarea id="txtInput" class="student-input" placeholder="Escribe tu respuesta con tus palabras..."></textarea>`;
+            } else if (data.type === 'blanks') {
+                html += `<div style="font-size:1.2rem; line-height:2.5;">`;
+                data.blanks.forEach((b, i) => {
+                    html += `${i + 1}. <input type="text" class="fill-input" data-ans="${limpiarPuntuacionFinal(b)}"> <br>`;
+                });
+                html += `</div>`;
+            } else if (data.type === 'traffic') {
+                trafficAns = {};
+                data.items.forEach((item, i) => {
+                    const textoLimpio = limpiarPuntuacionFinal(item.text);
+                    html += `<div class="traffic-row" id="row-${i}">
+                                <span>${textoLimpio}</span>
+                                <div style="display:flex; gap:10px;">
+                                    <div class="traffic-btn bg-green" onclick="selTraffic(${i}, 'green')"></div>
+                                    <div class="traffic-btn bg-yellow" onclick="selTraffic(${i}, 'yellow')"></div>
+                                    <div class="traffic-btn bg-red" onclick="selTraffic(${i}, 'red')"></div>
+                                </div>
+                            </div>`;
+                });
+            } else if (data.type === 'checklist') {
+                data.items.forEach((item) => {
+                    const textoLimpio = limpiarPuntuacionFinal(item.text);
+                    html += `<div class="checklist-item" onclick="toggleCheck(this)" data-correct="${item.correct}">
+                                <div class="check-box"></div>
+                                <span>${textoLimpio}</span>
+                            </div>`;
+                });
+            }
+
+            html += `<div id="feedback" class="feedback-area"></div>
+                     <button id="btnCheck" class="btn-action" onclick="validate()">Verificar respuesta</button>
+                     <button class="btn-action btn-back" onclick="location.reload()">Salir al menú</button>`;
+
+            container.innerHTML = html;
+            wireUiSounds();
+        }
+
+        let trafficAns = {};
+
+        function selTraffic(idx, color) {
+            trafficAns[idx] = color;
+            const row = document.getElementById(`row-${idx}`);
+            row.querySelectorAll('.traffic-btn').forEach(b => b.classList.remove('active'));
+            row.querySelector(`.bg-${color}`).classList.add('active');
+            playSound('click');
+        }
+
+        function toggleCheck(el) {
+            el.classList.toggle('selected');
+            el.querySelector('.check-box').innerText = el.classList.contains('selected') ? '✓' : '';
+
+            if (el.classList.contains('selected')) {
+                el.style.borderColor = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.background = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.borderColor = 'var(--ficde-naranja)';
+                el.querySelector('.check-box').style.color = 'white';
+            } else {
+                el.style.borderColor = 'transparent';
+                el.querySelector('.check-box').style.background = 'transparent';
+                el.querySelector('.check-box').style.borderColor = '#ccc';
+            }
+
+            playSound('click');
+        }
+
+        function validate() {
+            const data = modules[currentModule][currentIndex];
+            const feedback = document.getElementById('feedback');
+            let isCorrect = false;
+
+            if (data.type === 'text') {
+                const val = document.getElementById('txtInput').value;
+                isCorrect = data.validation(val);
+            } else if (data.type === 'blanks') {
+                const inputs = document.querySelectorAll('.fill-input');
+                let hits = 0;
+                let usedAnswers = [];
+                inputs.forEach(inp => {
+                    const v = normalizar(inp.value.trim());
+                    if (v.length > 0) {
+                        if (data.anyOrder) {
+                            const matchedIdx = data.blanks.findIndex((ans, idx) => {
+                                if (usedAnswers.includes(idx)) return false;
+                                const normAns = normalizar(limpiarPuntuacionFinal(ans.trim()));
+                                return (normAns === v || (v.length > 1 && normAns.startsWith(v.slice(0, Math.max(2, Math.min(v.length, normAns.length))))));
+                            });
+                            if (matchedIdx !== -1) {
+                                hits++;
+                                usedAnswers.push(matchedIdx);
+                            }
+                        } else {
+                            const ans = normalizar(limpiarPuntuacionFinal(inp.dataset.ans.trim()));
+                            if (ans === v || (v.length > 1 && ans.startsWith(v.slice(0, Math.max(2, Math.min(v.length, ans.length)))))) {
+                                hits++;
+                            }
+                        }
+                    }
+                });
+                isCorrect = (hits === data.blanks.length);
+            } else if (data.type === 'traffic') {
+                let hits = 0;
+                data.items.forEach((item, i) => { if (trafficAns[i] === item.color) hits++; });
+                isCorrect = (hits === data.items.length);
+            } else if (data.type === 'checklist') {
+                let correct = true;
+                document.querySelectorAll('.checklist-item').forEach(item => {
+                    const sel = item.classList.contains('selected');
+                    const should = item.dataset.correct === 'true';
+                    if (sel !== should) correct = false;
+                });
+                isCorrect = correct;
+            }
+
+            feedback.style.display = 'block';
+
+            if (isCorrect) {
+                playAudio('correcto');
+                playSound('success');
+                feedback.className = 'feedback-area feedback-success';
+                feedback.innerHTML = `<strong>¡Muy bien!</strong><br>${data.explanation}`;
+                document.getElementById('btnCheck').innerText = 'Siguiente pregunta →';
+                document.getElementById('btnCheck').onclick = () => { currentIndex++; loadActivity(); };
+            } else {
+                attemptCount++;
+
+                if (attemptCount < 2) {
+                    playAudio('error1');
+                    feedback.className = 'feedback-area feedback-retry';
+                    feedback.innerHTML = `<strong>Buen intento.</strong> Revisa tu respuesta. Pista: ${data.tutor}`;
+                } else {
+                    playAudio('error2');
+                    feedback.className = 'feedback-area feedback-fail';
+                    feedback.innerHTML = `<strong>Sigamos adelante para aprender juntos:</strong><br>${data.explanation}`;
+                    document.getElementById('btnCheck').innerText = 'Entendido, continuar →';
+                    document.getElementById('btnCheck').onclick = () => { currentIndex++; loadActivity(); };
+                }
+            }
+        }
+
+        function replayTutorMessage() {
+            if (lastAudioModule) {
+                const audioKey = moduloAudioMap[lastAudioModule];
+                if (audioKey) {
+                    playAudio(audioKey);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
